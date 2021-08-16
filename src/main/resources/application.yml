@@ -1,0 +1,14 @@
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+
+# If working from your localhost/laptop, you will need to give the credential details below
+#spring:
+#  rabbitmq:
+#    ssl:
+#      enabled: true
+#    host: rabbitmq_host
+#    port: rabbitmq_port
+#    username: rabbitmq_user
+#    password: rabbitmq_password
