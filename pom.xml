@@ -304,6 +304,16 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+		<dependency>
 			<!-- Need to upgrade Guava from version 11 because of CVE -->
 			<!-- Required by eureka-client -->
 			<groupId>com.google.guava</groupId>

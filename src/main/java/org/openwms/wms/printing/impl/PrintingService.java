@@ -17,6 +17,8 @@ public interface PrintingService {
 
     public String screenshot();
 //
-//    public void actionPerformed(ActionEvent e);
+
+    public String generateLabel();
+
 
 }

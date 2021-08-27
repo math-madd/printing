@@ -1,5 +1,9 @@
 package org.openwms.wms.printing.api;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.oned.Code128Writer;
 import org.ameba.http.AbstractBase;
 import org.aspectj.lang.annotation.Before;
 import org.openwms.wms.printing.impl.PrintingService;
@@ -21,8 +25,10 @@ import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
+
 
 
 @Component
@@ -88,9 +94,36 @@ public class Printer extends AbstractBase implements PrintingService {
         } catch (AWTException | IOException ex) {
             System.err.println(ex);
         }
-        result = "Complete";
+        result = "Screenshot Captured";
         return result;
     }
+
+    @Override
+    public String generateLabel()
+    {
+            //Data encoded in the barcode
+            String data = "This is a barcode";
+
+            //Location where barcode will be stored
+            String path = "C:\\openWMS\\Resources\\Data\\Printing\\Barcodes\\test_barcode000.jpg";
+
+            //Format of the barcode
+            Code128Writer writer = new Code128Writer();
+            BitMatrix matrix = writer.encode(data, BarcodeFormat.CODE_128, 600, 300);
+
+            //Convert barcode to an image
+        try {
+            MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String result = "Barcode created";
+
+        return result;
+    }
+
+
 
 
 

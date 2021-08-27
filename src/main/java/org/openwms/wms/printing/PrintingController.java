@@ -1,10 +1,8 @@
 package org.openwms.wms.printing;
 
 import org.ameba.http.MeasuredRestController;
-import org.ameba.mapping.BeanMapper;
 import org.openwms.core.http.AbstractWebController;
 import org.openwms.core.http.Index;
-import org.openwms.wms.printing.api.Printer;
 import org.openwms.wms.printing.impl.PrintingService;
 
 import org.springframework.http.ResponseEntity;
@@ -32,7 +30,8 @@ public class PrintingController extends AbstractWebController {
         return ResponseEntity.ok(
                 new Index(
                         linkTo(methodOn(PrintingController.class).findPrinters()).withRel("find-all-printers"),
-                        linkTo(methodOn(PrintingController.class).screenshot()).withRel("screenshot")
+                        linkTo(methodOn(PrintingController.class).screenshot()).withRel("screenshot"),
+                        linkTo(methodOn(PrintingController.class).generateLabel()).withRel("generateLabel")
                 )
         );
     }
@@ -52,4 +51,14 @@ public class PrintingController extends AbstractWebController {
         return ResponseEntity.ok(screenshot);
 
     }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/v1/printing/generateLabel")
+    public ResponseEntity<String> generateLabel() {
+        String generateLabel = service.generateLabel();
+        return ResponseEntity.ok(generateLabel);
+    }
+
+
+
 }
