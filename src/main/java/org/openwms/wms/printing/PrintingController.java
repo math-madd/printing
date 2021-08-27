@@ -59,6 +59,4 @@ public class PrintingController extends AbstractWebController {
         return ResponseEntity.ok(generateLabel);
     }
 
-
-
 }

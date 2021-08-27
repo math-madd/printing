@@ -10,13 +10,9 @@ import java.util.List;
 
 public interface PrintingService {
 
-
-//    public int print(Graphics g, PageFormat pf, int page) throws PrinterException;
-
     public List<String> findPrinters();
 
     public String screenshot();
-//
 
     public String generateLabel();
 
