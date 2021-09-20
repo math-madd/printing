@@ -6,10 +6,11 @@ import org.openwms.core.http.Index;
 import org.openwms.wms.printing.impl.PrintingService;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -26,17 +27,19 @@ public class PrintingController extends AbstractWebController {
     }
 
     @GetMapping("/v1/printing/index")
-    public ResponseEntity<Index> index() {
+    public ResponseEntity<Index> index() throws IOException {
         return ResponseEntity.ok(
                 new Index(
                         linkTo(methodOn(PrintingController.class).findPrinters()).withRel("find-all-printers"),
                         linkTo(methodOn(PrintingController.class).screenshot()).withRel("screenshot"),
-                        linkTo(methodOn(PrintingController.class).generateLabel()).withRel("generateLabel")
+                        linkTo(methodOn(PrintingController.class).generateBarcode()).withRel("generateBarcode"),
+                        linkTo(methodOn(DocumentsController.class).docIndex()).withRel("documents")
+
                 )
-        );
+                );
     }
 
-    @Transactional(readOnly = true)
+
     @GetMapping("/v1/printing/findPrinters")
     public List<String> findPrinters() {
         List<String> devices = service.findPrinters();
@@ -44,7 +47,7 @@ public class PrintingController extends AbstractWebController {
 
     }
 
-    @Transactional(readOnly = true)
+
     @GetMapping("/v1/printing/screenshot")
     public ResponseEntity<String> screenshot() {
         String screenshot = service.screenshot();
@@ -52,11 +55,14 @@ public class PrintingController extends AbstractWebController {
 
     }
 
-    @Transactional(readOnly = true)
+
     @GetMapping("/v1/printing/generateLabel")
-    public ResponseEntity<String> generateLabel() {
-        String generateLabel = service.generateLabel();
-        return ResponseEntity.ok(generateLabel);
+    public ResponseEntity<Void> generateBarcode() {
+        service.generateBarcode();
+        return null;
+
     }
+
+
 
 }

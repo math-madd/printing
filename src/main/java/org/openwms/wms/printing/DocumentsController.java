@@ -11,14 +11,15 @@ import java.io.IOException;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@RestController("printingIndexController")
-class IndexController {
+@RestController("printingDocumentsController")
+public class DocumentsController {
 
-    @GetMapping("/index")
-    public ResponseEntity<Index> getIndex() throws IOException {
+    @GetMapping("/v1/documents/index")
+    public ResponseEntity<Index> docIndex() throws IOException {
         return ResponseEntity.ok(
                 new Index(
-                        linkTo(methodOn(PrintingController.class).index()).withRel("printing-index")
+                        linkTo(methodOn(bolController.class).bolIndex()).withRel("bill-of-lading")
+
                 )
         );
     }
